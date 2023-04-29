@@ -25,9 +25,11 @@ function Worked() {
       birth_day: birthDayRef.current.value.trim(),
       salary: salaryRef.current.value.trim(),
       position: positionRef.current.value.trim(),
-      male: maleRef.current.value?.trim(),
-      female: femaleRef.current.value?.trim(),
+      gendre: maleRef.current.checked
+        ? maleRef.current.value
+        : femaleRef.current.checked && femaleRef.current.value,
     };
+
     if (selectedIndex !== null) {
       worked[selectedIndex] = newWorked;
       setSelectedIndex(null);
@@ -35,16 +37,15 @@ function Worked() {
       setWorked([...worked, newWorked]);
     }
 
+    firstnameRef.current.value = "";
+    lastnameRef.current.value = "";
+    birthDayRef.current.value = "";
+    salaryRef.current.value = "";
+    positionRef.current.value = "";
+    maleRef.current.value = false;
+    femaleRef.current.value = false;
 
-    firstnameRef.current.value = '';
-    lastnameRef.current.value = '';
-    birthDayRef.current.value ='';
-    salaryRef.current.value = '';
-    positionRef.current.value = '';
-    maleRef.current.value = '';
-    femaleRef.current.value = '';
-
-    firstnameRef.current.focus()
+    firstnameRef.current.focus();
   };
 
   const handleDelete = (id) => {
@@ -57,11 +58,13 @@ function Worked() {
     setSelectedIndex(index);
   };
   return (
+
     <Fragment>
       <div className="container">
         <div className="row my-4">
           <div className="col-3">
             <Form
+              selectedIndex={selectedIndex}
               handleSubmit={handleSubmit}
               firstnameRef={firstnameRef}
               lastnameRef={lastnameRef}
@@ -81,9 +84,8 @@ function Worked() {
                     key={index}
                     work={work}
                     handleDelete={handleDelete}
-                    maleRef={maleRef}
-                    female={femaleRef}
                     handleEdit={handleEdit}
+                    index={index}
                   />
                 ))}
             </div>
